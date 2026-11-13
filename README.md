@@ -1,6 +1,6 @@
 # 🎨 Juego de Pintar
 
-Un juego de pintar para niños (y no tan niños) hecho con React. Elige un animal, selecciona una herramienta y dale tu toque de color.
+Un juego de pintar para niños (y no tan niños). Elige un animal, selecciona una herramienta y dale tu toque de color.
 
 ## ✨ Características
 
@@ -18,25 +18,24 @@ Un juego de pintar para niños (y no tan niños) hecho con React. Elige un anima
 
 ## 🚀 Cómo jugar
 
-1. Abre `index.html` en cualquier navegador (haz doble clic o arrástralo a una pestaña).
+1. Abre `index.html` en cualquier navegador (doble clic, o visita la web publicada).
 2. Elige el animal en el desplegable **Animal**.
 3. Elige la herramienta en el desplegable **Herramienta** y un color de la paleta.
 4. ¡Pinta! Con la herramienta *Rellenar región*, un clic dentro de cualquier zona (una oreja, una aleta, el vientre…) la rellena completa.
 5. Pulsa **Guardar PNG** para descargar tu obra de arte.
 
-> Nota: necesita conexión a internet la primera vez, porque React se carga desde CDN.
+> Sin dependencias externas: funciona incluso sin conexión a internet (solo necesitas el archivo).
 
-## 🌐 Publicarlo con GitHub Pages
+## 🌐 Jugar online
 
-1. Sube este repositorio a GitHub.
-2. Ve a **Settings → Pages**.
-3. En *Source*, elige la rama `main` y carpeta ``/ (root)``. Guarda.
-4. En unos minutos tu juego estará en: `https://<tu-usuario>.github.io/JuegoPintar/`
+El juego está publicado con GitHub Pages en:
+
+**https://ajpuceda.github.io/JuegoPintar/**
 
 ## 🛠️ Tecnología
 
-- React 18 (vía CDN, sin necesidad de instalar nada ni compilar)
-- Canvas 2D en dos capas: capa de pintura + capa de líneas del dibujo (así los contornos nunca se borran)
-- Algoritmo de *flood fill* con máscara de contornos para el relleno por regiones
+- JavaScript puro (vanilla) en un único archivo HTML — sin frameworks, sin CDN, sin instalación ni compilación.
+- Canvas 2D en dos capas: capa de pintura + capa de líneas del dibujo (así los contornos nunca se borran).
+- Algoritmo de *flood fill* con máscara de contornos para el relleno por regiones.
 
 ¡Feliz pintura! 🖍️
