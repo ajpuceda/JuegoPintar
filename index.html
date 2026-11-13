@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>🎨 Juego de Pintar</title>
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    body { margin: 0; background: #dceefb; }
+    #root { min-height: 100vh; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="text/babel" data-presets="react">
+
+
+const W = 900, H = 640;
+
+const COLORS = [
+  "#e53935", "#ff7043", "#ffb300", "#fdd835", "#aed581", "#66bb6a",
+  "#26a69a", "#4dd0e1", "#42a5f5", "#5c6bc0", "#ab47bc", "#ec407a",
+  "#8d6e63", "#cfd8dc", "#212121", "#ffffff",
+];
+
+const TOOLS = [
+  { id: "pincel", label: "🖌️ Pincel fino", size: 5 },
+  { id: "brocha", label: "🧹 Brocha gruesa", size: 28 },
+  { id: "spray", label: "💨 Aerógrafo", size: 32 },
+  { id: "relleno", label: "🪄 Rellenar región", size: 0 },
+  { id: "borrador", label: "🧽 Borrador", size: 24 },
+];
+
+const ANIMALS = [
+  { id: "gato", label: "🐱 Gato" },
+  { id: "pez", label: "🐠 Pez" },
+  { id: "rana", label: "🐸 Rana" },
+];
+
+function lineSetup(c) {
+  c.strokeStyle = "#263238";
+  c.lineWidth = 5;
+  c.lineJoin = "round";
+  c.lineCap = "round";
+}
+
+function drawCat(c) {
+  lineSetup(c);
+  const w = (x1, y1, x2, y2) => { c.beginPath(); c.moveTo(x1, y1); c.lineTo(x2, y2); c.stroke(); };
+  // cola
+  c.beginPath(); c.moveTo(615, 505); c.bezierCurveTo(745, 510, 790, 400, 735, 335); c.stroke();
+  c.beginPath(); c.arc(735, 335, 20, 0, Math.PI * 2); c.stroke();
+  // cuerpo
+  c.beginPath(); c.ellipse(450, 480, 190, 128, 0, 0, Math.PI * 2); c.stroke();
+  // patas delanteras
+  c.beginPath(); c.ellipse(388, 590, 46, 20, 0, 0, Math.PI * 2); c.stroke();
+  c.beginPath(); c.ellipse(512, 590, 46, 20, 0, 0, Math.PI * 2); c.stroke();
+  // cabeza
+  c.beginPath(); c.ellipse(450, 295, 168, 150, 0, 0, Math.PI * 2); c.stroke();
+  // orejas
+  c.beginPath(); c.moveTo(345, 180); c.lineTo(300, 70); c.lineTo(432, 146); c.stroke();
+  c.beginPath(); c.moveTo(555, 180); c.lineTo(600, 70); c.lineTo(468, 146); c.stroke();
+  // orejas internas
+  c.beginPath(); c.moveTo(346, 172); c.lineTo(324, 104); c.lineTo(412, 140); c.stroke();
+  c.beginPath(); c.moveTo(554, 172); c.lineTo(576, 104); c.lineTo(488, 140); c.stroke();
+  // ojos
+  c.beginPath(); c.arc(398, 278, 22, 0, Math.PI * 2); c.stroke();
+  c.beginPath(); c.arc(502, 278, 22, 0, Math.PI * 2); c.stroke();
+  // nariz
+  c.beginPath(); c.moveTo(434, 328); c.lineTo(466, 328); c.lineTo(450, 350); c.closePath(); c.stroke();
+  // boca
+  c.beginPath();
+  c.moveTo(450, 350); c.lineTo(450, 364);
+  c.moveTo(450, 364); c.arc(432, 364, 18, 0, Math.PI);
+  c.moveTo(450, 364); c.arc(468, 364, 18, 0, Math.PI);
+  c.stroke();
+  // bigotes
+  w(368, 320, 285, 302); w(368, 335, 278, 335); w(368, 350, 285, 368);
+  w(532, 320, 615, 302); w(532, 335, 622, 335); w(532, 350, 615, 368);
+  // rayas de la frente
+  w(430, 175, 428, 215); w(450, 168, 450, 212); w(470, 175, 472, 215);
+  // rayas del cuerpo
+  c.beginPath(); c.moveTo(292, 420); c.quadraticCurveTo(330, 432, 344, 455); c.stroke();
+  c.beginPath(); c.moveTo(292, 468); c.quadraticCurveTo(328, 478, 342, 498); c.stroke();
+  c.beginPath(); c.moveTo(608, 420); c.quadraticCurveTo(570, 432, 556, 455); c.stroke();
+  c.beginPath(); c.moveTo(608, 468); c.quadraticCurveTo(572, 478, 558, 498); c.stroke();
+}
+
+function drawFish(c) {
+  lineSetup(c);
+  // cola
+  c.beginPath(); c.moveTo(275, 330); c.lineTo(165, 245); c.quadraticCurveTo(195, 330, 165, 415); c.closePath(); c.stroke();
+  // cuerpo
+  c.beginPath(); c.ellipse(470, 330, 210, 140, 0, 0, Math.PI * 2); c.stroke();
+  // aleta dorsal
+  c.beginPath(); c.moveTo(395, 199); c.quadraticCurveTo(470, 80, 548, 200); c.quadraticCurveTo(470, 150, 395, 199); c.stroke();
+  // aleta ventral
+  c.beginPath(); c.moveTo(420, 463); c.quadraticCurveTo(470, 565, 555, 458); c.quadraticCurveTo(470, 505, 420, 463); c.stroke();
+  // aleta lateral
+  c.beginPath(); c.ellipse(430, 372, 50, 20, -0.45, 0, Math.PI * 2); c.stroke();
+  // ojo
+  c.beginPath(); c.arc(585, 285, 25, 0, Math.PI * 2); c.stroke();
+  // boca
+  c.beginPath(); c.moveTo(672, 338); c.quadraticCurveTo(697, 352, 674, 372); c.stroke();
+  // agallas
+  c.beginPath(); c.moveTo(540, 262); c.quadraticCurveTo(575, 330, 540, 398); c.stroke();
+  // escamas
+  c.beginPath(); c.arc(400, 345, 30, Math.PI, 0); c.stroke();
+  c.beginPath(); c.arc(462, 345, 30, Math.PI, 0); c.stroke();
+  c.beginPath(); c.arc(524, 345, 30, Math.PI, 0); c.stroke();
+  // burbujas
+  c.beginPath(); c.arc(742, 180, 30, 0, Math.PI * 2); c.stroke();
+  c.beginPath(); c.arc(790, 115, 18, 0, Math.PI * 2); c.stroke();
+  c.beginPath(); c.arc(758, 60, 10, 0, Math.PI * 2); c.stroke();
+}
+
+function drawFrog(c) {
+  lineSetup(c);
+  const w = (x1, y1, x2, y2) => { c.beginPath(); c.moveTo(x1, y1); c.lineTo(x2, y2); c.stroke(); };
+  // patas traseras
+  c.beginPath(); c.ellipse(228, 470, 75, 48, 0.35, 0, Math.PI * 2); c.stroke();
+  c.beginPath(); c.ellipse(672, 470, 75, 48, -0.35, 0, Math.PI * 2); c.stroke();
+  // cuerpo
+  c.beginPath(); c.ellipse(450, 430, 205, 152, 0, 0, Math.PI * 2); c.stroke();
+  // ojos
+  c.beginPath(); c.arc(372, 222, 60, 0, Math.PI * 2); c.stroke();
+  c.beginPath(); c.arc(528, 222, 60, 0, Math.PI * 2); c.stroke();
+  c.beginPath(); c.arc(372, 222, 28, 0, Math.PI * 2); c.stroke();
+  c.beginPath(); c.arc(528, 222, 28, 0, Math.PI * 2); c.stroke();
+  // vientre
+  c.beginPath(); c.ellipse(450, 472, 112, 78, 0, 0, Math.PI * 2); c.stroke();
+  // boca (sonrisa)
+  c.beginPath(); c.arc(450, 395, 125, 0.25, Math.PI - 0.25); c.stroke();
+  // patas delanteras
+  c.beginPath(); c.ellipse(382, 568, 58, 20, 0, 0, Math.PI * 2); c.stroke();
+  c.beginPath(); c.ellipse(518, 568, 58, 20, 0, 0, Math.PI * 2); c.stroke();
+  // dedos
+  w(345, 560, 345, 588); w(370, 560, 370, 588); w(395, 560, 395, 588);
+  w(482, 560, 482, 588); w(507, 560, 507, 588); w(532, 560, 532, 588);
+  // fosas nasales
+  c.beginPath(); c.arc(438, 338, 5, 0, Math.PI * 2); c.stroke();
+  c.beginPath(); c.arc(462, 338, 5, 0, Math.PI * 2); c.stroke();
+}
+
+function hexToRgb(hex) {
+  const n = parseInt(hex.slice(1), 16);
+  return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+}
+
+function App() {
+  const paintRef = React.useRef(null);
+  const linesRef = React.useRef(null);
+  const wrapRef = React.useRef(null);
+  const linesDataRef = React.useRef(null);
+  const historyRef = React.useRef([]);
+  const drawingRef = React.useRef(false);
+  const lastRef = React.useRef(null);
+  const [animal, setAnimal] = React.useState("gato");
+  const [tool, setTool] = React.useState("pincel");
+  const [color, setColor] = React.useState("#e53935");
+  const [size, setSize] = React.useState(5);
+
+  React.useEffect(() => {
+    const lc = linesRef.current.getContext("2d");
+    lc.clearRect(0, 0, W, H);
+    lineSetup(lc);
+    if (animal === "gato") drawCat(lc);
+    else if (animal === "pez") drawFish(lc);
+    else drawFrog(lc);
+    linesDataRef.current = lc.getImageData(0, 0, W, H);
+    const pc = paintRef.current.getContext("2d");
+    pc.fillStyle = "#ffffff";
+    pc.fillRect(0, 0, W, H);
+    historyRef.current = [];
+  }, [animal]);
+
+  React.useEffect(() => {
+    const def = TOOLS.filter((t) => t.id === tool)[0];
+    if (def && def.size) setSize(def.size);
+  }, [tool]);
+
+  const pos = (e) => {
+    const r = wrapRef.current.getBoundingClientRect();
+    return { x: (e.clientX - r.left) * W / r.width, y: (e.clientY - r.top) * H / r.height };
+  };
+
+  const snapshot = () => {
+    const ctx = paintRef.current.getContext("2d");
+    const h = historyRef.current;
+    h.push(ctx.getImageData(0, 0, W, H));
+    if (h.length > 15) h.shift();
+  };
+
+  const floodFill = (ctx, x, y, hex) => {
+    if (x < 0 || y < 0 || x >= W || y >= H) return;
+    const lines = linesDataRef.current;
+    if (!lines) return;
+    const img = ctx.getImageData(0, 0, W, H);
+    const d = img.data, ld = lines.data;
+    const start = y * W + x;
+    const i0 = start * 4;
+    const tr = d[i0], tg = d[i0 + 1], tb = d[i0 + 2];
+    const rgb = hexToRgb(hex);
+    const fr = rgb[0], fg = rgb[1], fb = rgb[2];
+    if (Math.abs(tr - fr) < 6 && Math.abs(tg - fg) < 6 && Math.abs(tb - fb) < 6) return;
+    const tol = 30;
+    const seen = new Uint8Array(W * H);
+    seen[start] = 1;
+    const stack = [start];
+    const match = (pi) => {
+      const i = pi * 4;
+      return Math.abs(d[i] - tr) <= tol && Math.abs(d[i + 1] - tg) <= tol && Math.abs(d[i + 2] - tb) <= tol;
+    };
+    while (stack.length) {
+      const pi = stack.pop();
+      if (ld[pi * 4 + 3] > 40) continue;
+      const i = pi * 4;
+      d[i] = fr; d[i + 1] = fg; d[i + 2] = fb; d[i + 3] = 255;
+      const px = pi % W;
+      if (px > 0 && !seen[pi - 1] && match(pi - 1)) { seen[pi - 1] = 1; stack.push(pi - 1); }
+      if (px < W - 1 && !seen[pi + 1] && match(pi + 1)) { seen[pi + 1] = 1; stack.push(pi + 1); }
+      if (pi >= W && !seen[pi - W] && match(pi - W)) { seen[pi - W] = 1; stack.push(pi - W); }
+      if (pi < W * H - W && !seen[pi + W] && match(pi + W)) { seen[pi + W] = 1; stack.push(pi + W); }
+    }
+    ctx.putImageData(img, 0, 0);
+  };
+
+  const onDown = (e) => {
+    const p = pos(e);
+    const ctx = paintRef.current.getContext("2d");
+    snapshot();
+    if (tool === "relleno") {
+      floodFill(ctx, Math.floor(p.x), Math.floor(p.y), color);
+      return;
+    }
+    e.currentTarget.setPointerCapture(e.pointerId);
+    drawingRef.current = true;
+    lastRef.current = p;
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+    ctx.strokeStyle = tool === "borrador" ? "#ffffff" : color;
+    ctx.lineWidth = size;
+    ctx.beginPath();
+    ctx.moveTo(p.x, p.y);
+    ctx.lineTo(p.x + 0.01, p.y);
+    ctx.stroke();
+  };
+
+  const onMove = (e) => {
+    if (!drawingRef.current) return;
+    const p = pos(e);
+    const ctx = paintRef.current.getContext("2d");
+    if (tool === "spray") {
+      ctx.fillStyle = color;
+      ctx.globalAlpha = 0.3;
+      for (let i = 0; i < 14; i++) {
+        const a = Math.random() * Math.PI * 2;
+        const dist = Math.random() * size;
+        ctx.fillRect(p.x + Math.cos(a) * dist, p.y + Math.sin(a) * dist, 2, 2);
+      }
+      ctx.globalAlpha = 1;
+    } else {
+      ctx.strokeStyle = tool === "borrador" ? "#ffffff" : color;
+      ctx.lineWidth = size;
+      ctx.beginPath();
+      ctx.moveTo(lastRef.current.x, lastRef.current.y);
+      ctx.lineTo(p.x, p.y);
+      ctx.stroke();
+    }
+    lastRef.current = p;
+  };
+
+  const onUp = () => { drawingRef.current = false; };
+
+  const undo = () => {
+    const h = historyRef.current;
+    const last = h.pop();
+    if (last) paintRef.current.getContext("2d").putImageData(last, 0, 0);
+  };
+
+  const clearAll = () => {
+    snapshot();
+    const ctx = paintRef.current.getContext("2d");
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(0, 0, W, H);
+  };
+
+  const save = () => {
+    const t = document.createElement("canvas");
+    t.width = W; t.height = H;
+    const tc = t.getContext("2d");
+    tc.fillStyle = "#ffffff";
+    tc.fillRect(0, 0, W, H);
+    tc.drawImage(paintRef.current, 0, 0);
+    tc.drawImage(linesRef.current, 0, 0);
+    const a = document.createElement("a");
+    a.download = "juego-pintar-" + animal + ".png";
+    a.href = t.toDataURL("image/png");
+    a.click();
+  };
+
+  const card = { background: "#fff", borderRadius: 16, padding: 16, boxShadow: "0 4px 14px rgba(0,0,0,0.08)" };
+  const btn = { border: "none", borderRadius: 10, padding: "9px 14px", fontSize: 15, cursor: "pointer", background: "#f5f5f4", fontWeight: 600 };
+  const selectStyle = { padding: "9px 12px", borderRadius: 10, border: "2px solid #e7e5e4", fontSize: 15, background: "#fff", cursor: "pointer", fontWeight: 600 };
+  const labelStyle = { display: "flex", alignItems: "center", gap: 8, fontWeight: 700, fontSize: 15 };
+
+  return (
+    <div style={{ minHeight: "100vh", background: "linear-gradient(160deg,#fdf3e0,#dceefb)", padding: "20px 14px 40px", fontFamily: "system-ui,-apple-system,'Segoe UI',sans-serif" }}>
+      <div style={{ maxWidth: 940, margin: "0 auto" }}>
+        <h1 style={{ fontSize: 32, fontWeight: 800, margin: "6px 0 4px", color: "#263238" }}>🎨 Juego de Pintar</h1>
+        <p style={{ margin: "0 0 16px", color: "#546e7a", fontWeight: 600 }}>Elige un animal, escoge tu herramienta y dale tu toque de color.</p>
+
+        <div style={{ ...card, display: "flex", flexWrap: "wrap", gap: 14, alignItems: "center", marginBottom: 14 }}>
+          <label style={labelStyle}>
+            Animal
+            <select value={animal} onChange={(e) => setAnimal(e.target.value)} style={selectStyle}>
+              {ANIMALS.map((a) => <option key={a.id} value={a.id}>{a.label}</option>)}
+            </select>
+          </label>
+          <label style={labelStyle}>
+            Herramienta
+            <select value={tool} onChange={(e) => setTool(e.target.value)} style={selectStyle}>
+              {TOOLS.map((t) => <option key={t.id} value={t.id}>{t.label}</option>)}
+            </select>
+          </label>
+          {tool !== "relleno" && (
+            <label style={labelStyle}>
+              Tamaño
+              <input type="range" min={1} max={60} value={size} onChange={(e) => setSize(Number(e.target.value))} style={{ cursor: "pointer" }} />
+              <span style={{ minWidth: 24, textAlign: "center" }}>{size}</span>
+            </label>
+          )}
+          <div style={{ display: "flex", gap: 8, marginLeft: "auto", flexWrap: "wrap" }}>
+            <button onClick={undo} style={btn}>↩️ Deshacer</button>
+            <button onClick={clearAll} style={btn}>🗑️ Limpiar</button>
+            <button onClick={save} style={{ ...btn, background: "#42a5f5", color: "#fff" }}>💾 Guardar PNG</button>
+          </div>
+        </div>
+
+        <div style={{ ...card, marginBottom: 14, display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center" }}>
+          <span style={{ fontWeight: 700, fontSize: 15 }}>Colores:</span>
+          {COLORS.map((c) => (
+            <button
+              key={c}
+              onClick={() => setColor(c)}
+              title={c}
+              style={{
+                width: 36, height: 36, borderRadius: "50%", background: c, cursor: "pointer",
+                border: c === "#ffffff" ? "2px solid #ddd" : "none",
+                boxShadow: color === c ? "0 0 0 3px #fff, 0 0 0 6px #263238" : "0 1px 3px rgba(0,0,0,0.25)",
+              }}
+            />
+          ))}
+          <label style={{ ...labelStyle, cursor: "pointer" }}>
+            Personalizado
+            <input type="color" value={color} onChange={(e) => setColor(e.target.value)} style={{ width: 36, height: 36, border: "none", background: "none", cursor: "pointer", padding: 0 }} />
+          </label>
+        </div>
+
+        <div
+          ref={wrapRef}
+          onPointerDown={onDown}
+          onPointerMove={onMove}
+          onPointerUp={onUp}
+          onPointerCancel={onUp}
+          onContextMenu={(e) => e.preventDefault()}
+          style={{
+            position: "relative", width: "100%", aspectRatio: "900 / 640", background: "#fff",
+            borderRadius: 16, overflow: "hidden", boxShadow: "0 6px 20px rgba(0,0,0,0.12)",
+            touchAction: "none", cursor: "crosshair", border: "3px solid #263238",
+          }}
+        >
+          <canvas ref={paintRef} width={W} height={H} style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }} />
+          <canvas ref={linesRef} width={W} height={H} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", pointerEvents: "none" }} />
+        </div>
+
+        <p style={{ margin: "12px 4px 0", color: "#546e7a", fontSize: 14, fontWeight: 600 }}>
+          💡 Consejo: con <b>Rellenar región</b> haz clic dentro de una zona del dibujo (la cabeza, una aleta, el vientre…) y se pintará entera sin salirse de las líneas.
+        </p>
+      </div>
+    </div>
+  );
+}
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<App />);
+  </script>
+</body>
+</html>
