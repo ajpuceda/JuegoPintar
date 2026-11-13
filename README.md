@@ -9,7 +9,9 @@ Un juego de pintar para niños (y no tan niños). Elige entre **50 dibujos**, se
   - 🚗 **Vehículos (12)**: coche, camión, autobús, moto, bicicleta, velero, barco pesquero, avión, helicóptero, cohete, tren de vapor y globo aerostático.
   - 🌿 **Naturaleza (9)**: flor, girasol, árbol, seta, sol, luna, arcoíris, hoja y copo de nieve.
   - 🏰 **Objetos y lugares (7)**: casa, castillo, robot, balón de fútbol, cometa, manzana y reloj despertador.
-- **Menú desplegable de herramientas**:
+- **Interfaz compacta que cabe en una sola pantalla**: el lienzo se ajusta automáticamente al espacio disponible, sin hacer scroll.
+- **Botones de herramienta grandes** (pincel, brocha, spray, rellenar, borrador): un solo clic, fáciles de acertar también en pantallas táctiles.
+- Herramientas:
   - 🖌️ **Pincel fino** — para detalles.
   - 🧹 **Brocha gruesa** — para pintar rápido grandes zonas a mano alzada.
   - 💨 **Aerógrafo** — efecto spray difuso.
@@ -24,8 +26,8 @@ Un juego de pintar para niños (y no tan niños). Elige entre **50 dibujos**, se
 
 1. Abre `index.html` en cualquier navegador (doble clic, o visita la web publicada).
 2. Elige el dibujo en el desplegable **Dibujo**.
-3. Elige la herramienta en el desplegable **Herramienta** y un color de la paleta.
-4. ¡Pinta! Con la herramienta *Rellenar región*, un clic dentro de cualquier zona (una oreja, una aleta, el vientre…) la rellena completa.
+3. Elige la herramienta con un botón grande y un color de la paleta.
+4. ¡Pinta! Con la herramienta *Rellenar*, un clic dentro de cualquier zona (una oreja, una aleta, el vientre…) la rellena completa.
 5. Pulsa **Guardar PNG** para descargar tu obra de arte.
 
 > Sin dependencias externas: funciona incluso sin conexión a internet (solo necesitas los archivos).
@@ -42,5 +44,6 @@ El juego está publicado con GitHub Pages en:
 - Dibujos vectoriales definidos en `dibujos.js` (elipses, curvas Bézier y trazados), renderizados con Canvas 2D.
 - Canvas en dos capas: capa de pintura + capa de líneas del dibujo (así los contornos nunca se borran).
 - Algoritmo de *flood fill* con máscara de contornos para el relleno por regiones.
+- Escalado automático del lienzo con JavaScript puro (sin librerías).
 
 ¡Feliz pintura! 🖍️
