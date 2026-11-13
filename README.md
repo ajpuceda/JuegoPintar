@@ -1,10 +1,14 @@
 # 🎨 Juego de Pintar
 
-Un juego de pintar para niños (y no tan niños). Elige un animal, selecciona una herramienta y dale tu toque de color.
+Un juego de pintar para niños (y no tan niños). Elige entre **50 dibujos**, selecciona una herramienta y dale tu toque de color.
 
 ## ✨ Características
 
-- **3 dibujos para colorear**: 🐱 gato, 🐠 pez y 🐸 rana.
+- **50 dibujos para colorear**, organizados en 4 categorías:
+  - 🐾 **Animales (22)**: gato, perro, conejo, caballo, vaca, cerdo, oso, león, elefante, jirafa, rana, tortuga, pez, delfín, mariposa, abeja, mariquita, caracol, pulpo, cangrejo, búho y pingüino.
+  - 🚗 **Vehículos (12)**: coche, camión, autobús, moto, bicicleta, velero, barco pesquero, avión, helicóptero, cohete, tren de vapor y globo aerostático.
+  - 🌿 **Naturaleza (9)**: flor, girasol, árbol, seta, sol, luna, arcoíris, hoja y copo de nieve.
+  - 🏰 **Objetos y lugares (7)**: casa, castillo, robot, balón de fútbol, cometa, manzana y reloj despertador.
 - **Menú desplegable de herramientas**:
   - 🖌️ **Pincel fino** — para detalles.
   - 🧹 **Brocha gruesa** — para pintar rápido grandes zonas a mano alzada.
@@ -19,12 +23,12 @@ Un juego de pintar para niños (y no tan niños). Elige un animal, selecciona un
 ## 🚀 Cómo jugar
 
 1. Abre `index.html` en cualquier navegador (doble clic, o visita la web publicada).
-2. Elige el animal en el desplegable **Animal**.
+2. Elige el dibujo en el desplegable **Dibujo**.
 3. Elige la herramienta en el desplegable **Herramienta** y un color de la paleta.
 4. ¡Pinta! Con la herramienta *Rellenar región*, un clic dentro de cualquier zona (una oreja, una aleta, el vientre…) la rellena completa.
 5. Pulsa **Guardar PNG** para descargar tu obra de arte.
 
-> Sin dependencias externas: funciona incluso sin conexión a internet (solo necesitas el archivo).
+> Sin dependencias externas: funciona incluso sin conexión a internet (solo necesitas los archivos).
 
 ## 🌐 Jugar online
 
@@ -34,8 +38,9 @@ El juego está publicado con GitHub Pages en:
 
 ## 🛠️ Tecnología
 
-- JavaScript puro (vanilla) en un único archivo HTML — sin frameworks, sin CDN, sin instalación ni compilación.
-- Canvas 2D en dos capas: capa de pintura + capa de líneas del dibujo (así los contornos nunca se borran).
+- JavaScript puro (vanilla) en dos archivos — sin frameworks, sin CDN, sin instalación ni compilación.
+- Dibujos vectoriales definidos en `dibujos.js` (elipses, curvas Bézier y trazados), renderizados con Canvas 2D.
+- Canvas en dos capas: capa de pintura + capa de líneas del dibujo (así los contornos nunca se borran).
 - Algoritmo de *flood fill* con máscara de contornos para el relleno por regiones.
 
 ¡Feliz pintura! 🖍️

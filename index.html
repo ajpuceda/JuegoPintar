@@ -19,6 +19,7 @@
     select {
       padding: 9px 12px; border-radius: 10px; border: 2px solid #e7e5e4;
       font-size: 15px; background: #fff; cursor: pointer; font-weight: 600;
+      max-width: 220px;
     }
     button {
       border: none; border-radius: 10px; padding: 9px 14px; font-size: 15px;
@@ -48,15 +49,11 @@
 <body>
   <div class="page">
     <h1>🎨 Juego de Pintar</h1>
-    <p class="sub">Elige un animal, escoge tu herramienta y dale tu toque de color.</p>
+    <p class="sub">Elige uno de los 50 dibujos, escoge tu herramienta y dale tu toque de color.</p>
 
     <div class="toolbar card">
-      <label>Animal
-        <select id="animalSel">
-          <option value="gato">🐱 Gato</option>
-          <option value="pez">🐠 Pez</option>
-          <option value="rana">🐸 Rana</option>
-        </select>
+      <label>Dibujo
+        <select id="animalSel"></select>
       </label>
       <label>Herramienta
         <select id="toolSel">
@@ -93,6 +90,7 @@
     <p class="hint">💡 Consejo: con <b>Rellenar región</b> haz clic dentro de una zona del dibujo (la cabeza, una aleta, el vientre…) y se pintará entera sin salirse de las líneas.</p>
   </div>
 
+  <script src="dibujos.js"></script>
   <script>
   (function () {
     "use strict";
@@ -120,81 +118,6 @@
     var drawing = false;
     var last = null;
 
-    function lineSetup(c) {
-      c.strokeStyle = "#263238";
-      c.lineWidth = 5;
-      c.lineJoin = "round";
-      c.lineCap = "round";
-    }
-
-    function drawCat(c) {
-      lineSetup(c);
-      var w = function (x1, y1, x2, y2) { c.beginPath(); c.moveTo(x1, y1); c.lineTo(x2, y2); c.stroke(); };
-      c.beginPath(); c.moveTo(615, 505); c.bezierCurveTo(745, 510, 790, 400, 735, 335); c.stroke();
-      c.beginPath(); c.arc(735, 335, 20, 0, Math.PI * 2); c.stroke();
-      c.beginPath(); c.ellipse(450, 480, 190, 128, 0, 0, Math.PI * 2); c.stroke();
-      c.beginPath(); c.ellipse(388, 590, 46, 20, 0, 0, Math.PI * 2); c.stroke();
-      c.beginPath(); c.ellipse(512, 590, 46, 20, 0, 0, Math.PI * 2); c.stroke();
-      c.beginPath(); c.ellipse(450, 295, 168, 150, 0, 0, Math.PI * 2); c.stroke();
-      c.beginPath(); c.moveTo(345, 180); c.lineTo(300, 70); c.lineTo(432, 146); c.stroke();
-      c.beginPath(); c.moveTo(555, 180); c.lineTo(600, 70); c.lineTo(468, 146); c.stroke();
-      c.beginPath(); c.moveTo(346, 172); c.lineTo(324, 104); c.lineTo(412, 140); c.stroke();
-      c.beginPath(); c.moveTo(554, 172); c.lineTo(576, 104); c.lineTo(488, 140); c.stroke();
-      c.beginPath(); c.arc(398, 278, 22, 0, Math.PI * 2); c.stroke();
-      c.beginPath(); c.arc(502, 278, 22, 0, Math.PI * 2); c.stroke();
-      c.beginPath(); c.moveTo(434, 328); c.lineTo(466, 328); c.lineTo(450, 350); c.closePath(); c.stroke();
-      c.beginPath();
-      c.moveTo(450, 350); c.lineTo(450, 364);
-      c.moveTo(450, 364); c.arc(432, 364, 18, 0, Math.PI);
-      c.moveTo(450, 364); c.arc(468, 364, 18, 0, Math.PI);
-      c.stroke();
-      w(368, 320, 285, 302); w(368, 335, 278, 335); w(368, 350, 285, 368);
-      w(532, 320, 615, 302); w(532, 335, 622, 335); w(532, 350, 615, 368);
-      w(430, 175, 428, 215); w(450, 168, 450, 212); w(470, 175, 472, 215);
-      c.beginPath(); c.moveTo(292, 420); c.quadraticCurveTo(330, 432, 344, 455); c.stroke();
-      c.beginPath(); c.moveTo(292, 468); c.quadraticCurveTo(328, 478, 342, 498); c.stroke();
-      c.beginPath(); c.moveTo(608, 420); c.quadraticCurveTo(570, 432, 556, 455); c.stroke();
-      c.beginPath(); c.moveTo(608, 468); c.quadraticCurveTo(572, 478, 558, 498); c.stroke();
-    }
-
-    function drawFish(c) {
-      lineSetup(c);
-      c.beginPath(); c.moveTo(275, 330); c.lineTo(165, 245); c.quadraticCurveTo(195, 330, 165, 415); c.closePath(); c.stroke();
-      c.beginPath(); c.ellipse(470, 330, 210, 140, 0, 0, Math.PI * 2); c.stroke();
-      c.beginPath(); c.moveTo(395, 199); c.quadraticCurveTo(470, 80, 548, 200); c.quadraticCurveTo(470, 150, 395, 199); c.stroke();
-      c.beginPath(); c.moveTo(420, 463); c.quadraticCurveTo(470, 565, 555, 458); c.quadraticCurveTo(470, 505, 420, 463); c.stroke();
-      c.beginPath(); c.ellipse(430, 372, 50, 20, -0.45, 0, Math.PI * 2); c.stroke();
-      c.beginPath(); c.arc(585, 285, 25, 0, Math.PI * 2); c.stroke();
-      c.beginPath(); c.moveTo(672, 338); c.quadraticCurveTo(697, 352, 674, 372); c.stroke();
-      c.beginPath(); c.moveTo(540, 262); c.quadraticCurveTo(575, 330, 540, 398); c.stroke();
-      c.beginPath(); c.arc(400, 345, 30, Math.PI, 0); c.stroke();
-      c.beginPath(); c.arc(462, 345, 30, Math.PI, 0); c.stroke();
-      c.beginPath(); c.arc(524, 345, 30, Math.PI, 0); c.stroke();
-      c.beginPath(); c.arc(742, 180, 30, 0, Math.PI * 2); c.stroke();
-      c.beginPath(); c.arc(790, 115, 18, 0, Math.PI * 2); c.stroke();
-      c.beginPath(); c.arc(758, 60, 10, 0, Math.PI * 2); c.stroke();
-    }
-
-    function drawFrog(c) {
-      lineSetup(c);
-      var w = function (x1, y1, x2, y2) { c.beginPath(); c.moveTo(x1, y1); c.lineTo(x2, y2); c.stroke(); };
-      c.beginPath(); c.ellipse(228, 470, 75, 48, 0.35, 0, Math.PI * 2); c.stroke();
-      c.beginPath(); c.ellipse(672, 470, 75, 48, -0.35, 0, Math.PI * 2); c.stroke();
-      c.beginPath(); c.ellipse(450, 430, 205, 152, 0, 0, Math.PI * 2); c.stroke();
-      c.beginPath(); c.arc(372, 222, 60, 0, Math.PI * 2); c.stroke();
-      c.beginPath(); c.arc(528, 222, 60, 0, Math.PI * 2); c.stroke();
-      c.beginPath(); c.arc(372, 222, 28, 0, Math.PI * 2); c.stroke();
-      c.beginPath(); c.arc(528, 222, 28, 0, Math.PI * 2); c.stroke();
-      c.beginPath(); c.ellipse(450, 472, 112, 78, 0, 0, Math.PI * 2); c.stroke();
-      c.beginPath(); c.arc(450, 395, 125, 0.25, Math.PI - 0.25); c.stroke();
-      c.beginPath(); c.ellipse(382, 568, 58, 20, 0, 0, Math.PI * 2); c.stroke();
-      c.beginPath(); c.ellipse(518, 568, 58, 20, 0, 0, Math.PI * 2); c.stroke();
-      w(345, 560, 345, 588); w(370, 560, 370, 588); w(395, 560, 395, 588);
-      w(482, 560, 482, 588); w(507, 560, 507, 588); w(532, 560, 532, 588);
-      c.beginPath(); c.arc(438, 338, 5, 0, Math.PI * 2); c.stroke();
-      c.beginPath(); c.arc(462, 338, 5, 0, Math.PI * 2); c.stroke();
-    }
-
     function hexToRgb(hex) {
       var n = parseInt(hex.slice(1), 16);
       return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
@@ -203,10 +126,7 @@
     function loadAnimal(a) {
       animal = a;
       lctx.clearRect(0, 0, W, H);
-      lineSetup(lctx);
-      if (a === "gato") drawCat(lctx);
-      else if (a === "pez") drawFish(lctx);
-      else drawFrog(lctx);
+      DIBUJOS.drawOps(lctx, DIBUJOS.get(a).ops);
       linesData = lctx.getImageData(0, 0, W, H);
       pctx.fillStyle = "#ffffff";
       pctx.fillRect(0, 0, W, H);
@@ -376,6 +296,22 @@
         b.classList.add("active");
       });
       palette.insertBefore(b, customColor.parentNode);
+    });
+
+    var sel = document.getElementById("animalSel");
+    DIBUJOS.CATS.forEach(function (cat) {
+      var og = document.createElement("optgroup");
+      og.label = cat[1];
+      DIBUJOS.ids().forEach(function (id) {
+        var d = DIBUJOS.get(id);
+        if (d.cat === cat[0]) {
+          var op = document.createElement("option");
+          op.value = id;
+          op.textContent = d.n;
+          og.appendChild(op);
+        }
+      });
+      sel.appendChild(og);
     });
 
     loadAnimal("gato");
